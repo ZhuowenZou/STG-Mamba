@@ -31,6 +31,8 @@ def TrainSTG_Mamba(train_dataloader, valid_dataloader, A, K=3, num_epochs=1, mam
     kfgn_mamba = KFGN_Mamba(kfgn_mamba_args)
     kfgn_mamba.cuda()
     
+    print(kfgn_mamba)
+
     loss_MSE = torch.nn.MSELoss()
     loss_L1 = torch.nn.L1Loss()
 

@@ -1,7 +1,8 @@
 import argparse
 from prepare import *
 from train_STGmamba import *
-from train_rnn import *
+from train_NSDmamba import *
+# from train_rnn import *
 
 
 parser = argparse.ArgumentParser(description='Train & Test STG_Mamba for traffic/weather/flow forecasting')
@@ -19,18 +20,18 @@ args = parser.parse_args()
     
 if args.dataset =='know_air':
     print("\nLoading KnowAir Dataset...")
-    speed_matrix = pd.read_csv('/root/STG_Mamba/Know_Air_Dataset/knowair_temperature.csv',sep=',')
-    A = np.load('/root/STG_Mamba/Know_Air_Dataset/knowair_adj_mat.npy')
+    speed_matrix = pd.read_csv('./Know_Air/knowair_temperature.csv',sep=',')
+    A = np.load('./Know_Air/knowair_adj_mat.npy')
 
 elif args.dataset == 'pems04':
     print("\nLoading PEMS04 data...")
-    speed_matrix = pd.read_csv('/root/STG_Mamba/PEMS04_Dataset/pems04_flow.csv',sep=',')
-    A = np.load('/root/STG_Mamba/PEMS04_Dataset/pems04_adj.npy')
+    speed_matrix = pd.read_csv('./PEMS04/pems04_flow.csv',sep=',')
+    A = np.load('./PEMS04/pems04_adj.npy')
 
 elif args.dataset == 'hz_metro':
     print("\nLoading HZ-Metro data...")
     speed_matrix = pd.read_csv('/root/STG_Mamba/HZ_Metro_Dataset/hzmetro_flow.csv',sep=',')
-    A = np.load('/root/STG_Mamba/HZ_Metro_Dataset/hzmetro_adj.npy')
+    A = np.load('./HZ_Metro_Dataset/hzmetro_adj.npy')
 
 
 print("\nPreparing train/test data...")
@@ -44,6 +45,13 @@ if args.model == 'STGmamba':
     print("\nTesting STGmamba model...")
     results = TestSTG_Mamba(STGmamba, test_dataloader, max_value)
 
+# models you want to use
+# elif args.model == 'NSDmamba':
+#     print("\nTraining NSDmamba model...")
+#     print(args)
+#     NSDmamba, NSDmamba_loss = TrainNSD_Mamba(train_dataloader, valid_dataloader, A, K=3, num_epochs=200, mamba_features=args.mamba_features)
+#     print("\nTesting NSDmamba model...")
+#     results = TestNSD_Mamba(NSDmamba, test_dataloader, max_value)
 
 elif args.model == 'lstm':
     print("\nTraining lstm model...")

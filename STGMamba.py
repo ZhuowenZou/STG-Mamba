@@ -203,6 +203,7 @@ class KFGN_Mamba(nn.Module):
         ##self.decoder_layers = nn.ModuleList([ResidualBlock(args) for _ in range(args.n_layer)]) #You can optionally uncommand these lines to use the identical Decoder.
         ##self.decoder_norm = RMSNorm(args.d_model) #You can optionally uncommand these lines to use the identical Decoder.
         self.decode = nn.Linear(args.d_model, args.features)
+        print(args)
 
     def forward(self, input_ids):
         x = self.encode(input_ids)
